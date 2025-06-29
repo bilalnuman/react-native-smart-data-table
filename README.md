@@ -129,17 +129,17 @@ export default Table;
 
 | Prop                | Type                                               | Description                                                     |
 | ------------------- | -------------------------------------------------- | --------------------------------------------------------------- |
-| `data`              | `Row[]`                                            | Array of row objects (each row must have a unique `id`).        |
-| `columns`           | `Column[]`                                         | Defines the table structure (title, key, sortable, width, etc). |
-| `isCheckBox`        | `boolean`                                          | Enables row selection with checkboxes.                          |
-| `searchAble`        | `boolean`                                          | Enables a search input above the table.                         |
-| `columnsVisibility` | `string[]`                                         | Keys of columns to be shown (hides others).                     |
-| `renderCell`        | `(row: Row, column: Column) => ReactNode`          | Render custom content for a specific cell.                      |
-| `sortIcon`          | `(dir: 'asc' \| 'desc' \| undefined) => ReactNode` | Optional custom sort icon renderer.                             |
-| `styles`            | `DataTableStyles`                                  | Customize table styles (header, row, checkbox, etc).            |
-| `pagination`        | `boolean`                                          | Show pagination controls below the table.                       |
-| `page`              | `number`                                           | Current page number.                                            |
-| `totalPages`        | `number`                                           | Total number of pages.                                          |
-| `onPageChange`      | `(page: number) => void`                           | Callback triggered when the page changes.                       |
-| `paginationVariant` | `"classic"` \| `"basic"`                           | Style of pagination control (classic = full, basic = compact).  |
-| `onSelectionChange` | `(selectedIds: number[]) => void`                  | Callback with selected row IDs when selection changes.          |
+| data              | Row[]                                            | Array of row objects (each row must have a unique `id`).        |
+| columns           | Column[]                                         | Defines the table structure (title, key, sortable, width, etc). |
+| isCheckBox        | boolean                                          | Enables row selection with checkboxes.                          |
+| searchAble        | boolean                                          | Enables a search input above the table.                         |
+| columnsVisibility | string[]                                         | Keys of columns to be shown (hides others).                     |
+| renderCell        | (row: Row, column: Column) => ReactNode          | Render custom content for a specific cell.                      |
+| sortIcon          | (dir: 'asc' | 'desc' | undefined) => ReactNode   | Optional custom sort icon renderer.                             |
+| styles            | DataTableStyles                                  | Customize table styles (header, row, checkbox, etc).            |
+| pagination        | boolean                                          | Show pagination controls below the table.                       |
+| page              | number                                           | Current page number.                                            |
+| totalPages        | number                                           | Total number of pages.                                          |
+| onPageChange      | (page: number) => void                           | Callback triggered when the page changes.                       |
+| paginationVariant | "classic" | "basic"                              | Style of pagination control (classic = full, basic = compact) default basic.  |
+| onSelectionChange | (selectedIds: number[]) => void                  | Callback with selected row IDs when selection changes.          |
