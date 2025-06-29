@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     View,
     Text,
@@ -6,56 +6,11 @@ import {
     TouchableOpacity,
     ScrollView,
     FlatList,
-    StyleSheet,
-    ViewStyle,
-    TextStyle,
+    StyleSheet
 } from 'react-native';
 import Pagination from './Pagination';
+import { Align, Column, DataTableProps } from './types';
 
-type Align = 'left' | 'center' | 'right';
-
-export interface Column {
-    key: string;
-    title: string;
-    sortable?: boolean;
-    align?: Align;
-    width?: number,
-    numberOfLines?: number,
-    scrollable?: { h?: boolean; v?: boolean };
-}
-
-export interface DataTableStyles {
-    container?: ViewStyle;
-    searchInput?: ViewStyle;
-    header?: ViewStyle;
-    headerCell?: ViewStyle;
-    headerText?: TextStyle;
-    row?: ViewStyle;
-    rowEven?: ViewStyle;
-    rowOdd?: ViewStyle;
-    cell?: ViewStyle;
-    cellText?: TextStyle;
-    checkbox?: ViewStyle;
-    noData?: TextStyle;
-    checkedCheckbox?: ViewStyle | TextStyle;
-}
-
-interface DataTableProps<Row> {
-    data: Row[];
-    columns: Column[];
-    isCheckBox?: boolean;
-    searchAble?: boolean;
-    columnsVisibility?: string[];
-    renderCell?: (row: Row, column: Column) => ReactNode;
-    sortIcon?: (dir: 'asc' | 'desc' | undefined) => ReactNode;
-    onSelectionChange?: (selectedIds: number[]) => void;
-    styles?: DataTableStyles;
-    pagination?: boolean,
-    page?: number,
-    totalPages?: number,
-    paginationVariant?: "classic" | "basic",
-    onPageChange?: (page: number) => void
-}
 const defaultSortIcon = (dir: 'asc' | 'desc' | undefined) => (
     <Text style={{ marginLeft: 4 }}>
         {dir === 'asc' ? '▲' : dir === 'desc' ? '▼' : ''}

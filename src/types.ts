@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { ViewStyle, TextStyle } from 'react-native';
 
 export type Align = 'left' | 'center' | 'right';
-
 export interface Column {
     key: string;
     title: string;
@@ -30,7 +29,7 @@ export interface DataTableStyles {
     checkedCheckbox?: ViewStyle | TextStyle;
 }
 
-export interface DataTableProps<Row extends { id: number }> {
+export interface DataTableProps<Row> {
     data: Row[];
     columns: Column[];
     isCheckBox?: boolean;
