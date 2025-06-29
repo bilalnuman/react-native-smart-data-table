@@ -1,4 +1,3 @@
-// src/types.ts
 
 import { ReactNode } from 'react';
 import { ViewStyle, TextStyle } from 'react-native';
@@ -10,8 +9,9 @@ export interface Column {
     title: string;
     sortable?: boolean;
     align?: Align;
-    width?: number;
-    numberOfLines?: number;
+    width?: number,
+    numberOfLines?: number,
+    scrollable?: { h?: boolean; v?: boolean };
 }
 
 export interface DataTableStyles {
@@ -40,11 +40,11 @@ export interface DataTableProps<Row extends { id: number }> {
     sortIcon?: (dir: 'asc' | 'desc' | undefined) => ReactNode;
     onSelectionChange?: (selectedIds: number[]) => void;
     styles?: DataTableStyles;
-    pagination?: boolean;
-    page?: number;
-    totalPages?: number;
-    paginationVariant?: 'classic' | 'basic';
-    onPageChange?: (page: number) => void;
+    pagination?: boolean,
+    page?: number,
+    totalPages?: number,
+    paginationVariant?: "classic" | "basic",
+    onPageChange?: (page: number) => void
 }
 
 export interface PaginationProps {

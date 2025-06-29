@@ -45,20 +45,22 @@ interface UserRow {
 
 
 const columns: Column[] = [
-    { key: 'id', title: 'ID', sortable: true, align: 'left' },
-    { key: 'name', title: 'Name', sortable: true, align: 'left' },
-    { key: 'age', title: 'Age', sortable: true, align: 'left' },
-    { key: 'dob', title: 'DOB', sortable: true, align: 'left', width: 100 },
-    { key: 'address', title: 'Address', sortable: false, align: "left", width: 100 },
-    { key: 'email', title: 'Email', sortable: false, align: 'left', width: 130 },
-    { key: 'description', title: 'Description', sortable: false, align: 'left', width: 400, numberOfLines: 1 },
+    { key: 'id', title: 'ID', sortable: true },
+    { key: '__image', title: 'Image' },
+    { key: 'name', title: 'Name', sortable: true, width: 150 },
+    { key: 'age', title: 'Age', sortable: true, },
+    { key: 'dob', title: 'DOB', sortable: true, width: 130 },
+    { key: 'address', title: 'Address', sortable: false, width: 100 },
+    { key: 'email', title: 'Email', sortable: false, width: 200 },
+    { key: 'description', title: 'Description',align:"left", sortable: false, width: 200,scrollable:{v:true, h:true} },
     { key: '__actions', title: 'Actions', align: 'right' },
 ];
 
 
 const data: UserRow[] = [
-    { id: 1, name: 'Alice', age: 24, dob: '1999-04-15', address: '123 Main', email: 'bilal.kalri@gmail.com', description: "A powerful, customizable React Native smart table component" },
-    { id: 2, name: 'Bob', age: 30, dob: '1995-08-22', address: '456 Elm', email: 'bob@x.com', description: "A powerful, customizable React Native smart table component" },
+    { id: 1, image: "https://watchlytics.s3.eu-west-2.amazonaws.com/static/images/bird-thumbnail_jOblOE2.jpg", name: 'Muhammad Bilal', age: 24, dob: '1999-04-15', address: '123 Main', email: 'bilal.kalri@gmail.com', description: "description" },
+    {
+        id: 2, image: "https://watchlytics.s3.eu-west-2.amazonaws.com/static/images/bird-thumbnail_jOblOE2.jpg", name: 'Bob', age: 30, dob: '1995-08-22', address: '456 Elm', email: 'bob@x.com', description: `Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor` },
 ]
 
 const arrow = (dir: 'asc' | 'desc' | undefined) => {
@@ -89,31 +91,18 @@ const Table = () => {
     return (
         <View style={styles.container}>
             <DataTable<UserRow>
-                data={data}
-                columns={columns}
-                isCheckBox
-                sortIcon={arrow}
-                renderCell={renderCell}
-                pagination={true}
-                totalPages={23}
-                onPageChange={(page) => setPage(page)}
-                onSelectionChange={(val) => console.log(val)}
-                page={page}
-                searchAble
-                paginationVariant="classic"
-
-                styles={{
-                    rowEven: { backgroundColor: '#ffffff' },
-                    rowOdd: { backgroundColor: '#f5f8ff' },
-                    header: { backgroundColor: '#1a73e8', borderColor: 'transparent', borderRadius: 4 },
-                    headerCell: { borderLeftColor: "transparent" },
-                    headerText: { color: '#fff', fontWeight: '600', fontSize: 14 },
-                    row: { borderColor: "transparent" },
-                    cell: { borderLeftColor: 'transparent' },
-                    cellText: { fontSize: 12, textAlign: "left" },
-                }}
-
-            />
+                    data={data}
+                    columns={columns}
+                    isCheckBox
+                    sortIcon={arrow}
+                    renderCell={renderCell}
+                    pagination={true}
+                    totalPages={23}
+                    onPageChange={(page) => setPage(page)}
+                    onSelectionChange={(val) => console.log(val)}
+                    page={page}
+                    searchAble
+                />
         </View>
     )
 };
@@ -143,3 +132,4 @@ export default Table;
 | onPageChange      | (page: number) => void                           | Callback triggered when the page changes.                       |
 | paginationVariant | "classic" | "basic"                              | Style of pagination control (classic = full, basic = compact) default basic.  |
 | onSelectionChange | (selectedIds: number[]) => void                  | Callback with selected row IDs when selection changes.          |
+|scrollable	{ h?: boolean, v?: boolean }	                           |Optional. Enables horizontal and/or vertical scrolling for the cell content of the column. |
