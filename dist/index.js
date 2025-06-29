@@ -18,6 +18,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pagination = exports.DataTable = void 0;
+// index.ts inside src
 var DataTable_1 = require("./DataTable");
 Object.defineProperty(exports, "DataTable", { enumerable: true, get: function () { return __importDefault(DataTable_1).default; } });
 var Pagination_1 = require("./Pagination");
