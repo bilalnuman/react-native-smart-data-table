@@ -1,6 +1,6 @@
 {
   "name": "react-native-smart-data-table",
-  "version": "1.03.0",
+  "version": "1.04.0",
   "description": "A highly customizable data table for React Native with sorting, search, checkbox, pagination and more.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -8,13 +8,31 @@
     "type": "git",
     "url": "https://github.com/bilalnuman/react-native-smart-data-table.git"
   },
+  "homepage": "https://github.com/bilalnuman/react-native-smart-data-table#readme",
+  "bugs": {
+    "url": "https://github.com/bilalnuman/react-native-smart-data-table/issues"
+  },
   "keywords": [
     "react-native",
     "table",
     "data-table",
+    "datatable",
+    "data grid",
+    "react native table",
     "checkbox",
+    "row selection",
     "pagination",
-    "customizable"
+    "customizable",
+    "sortable table",
+    "react native data table",
+    "smart table",
+    "table component",
+    "list table",
+    "react native ui",
+    "react-native-component",
+    "mobile table",
+    "flatlist table",
+    "react native grid"
   ],
   "author": "Muhammad Bilal",
   "license": "MIT",

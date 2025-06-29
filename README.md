@@ -144,4 +144,3 @@ export default Table;
 | `paginationVariant` | `"classic"` \| `"basic"`                           | Style of pagination control (classic = full, basic = compact).  |
 | `onSelectionChange` | `(selectedIds: number[]) => void`                  | Callback with selected row IDs when selection changes.          |
                                   |
-
