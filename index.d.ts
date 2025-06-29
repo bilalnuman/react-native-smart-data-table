@@ -1,5 +1,3 @@
-// index.d.ts
-
 import { ReactNode } from 'react';
 import { Column, DataTableProps, PaginationProps } from './src/types';
 

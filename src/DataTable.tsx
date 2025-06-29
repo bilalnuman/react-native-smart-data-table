@@ -20,7 +20,8 @@ export interface Column {
     sortable?: boolean;
     align?: Align;
     width?: number,
-    numberOfLines?: number
+    numberOfLines?: number,
+    scrollable?: { h?: boolean; v?: boolean };
 }
 
 export interface DataTableStyles {
@@ -86,6 +87,7 @@ const DataTable = <Row extends { id: number }>({
             : columns;
     const jc = (a: Align | undefined): 'flex-start' | 'center' | 'flex-end' =>
         a === 'left' ? 'flex-start' : a === 'right' ? 'flex-end' : 'center';
+
     const onPressHeader = (col: Column) => {
         if (!col.sortable) return;
         if (sortKey !== col.key) {
@@ -149,29 +151,33 @@ const DataTable = <Row extends { id: number }>({
                         style={[
                             styles.headerCell,
                             s.headerCell,
+                            { width: col.width ?? 70, alignItems: jc(col.align) },
                         ]}
                     >
-                        <View style={{ flexDirection: 'row', justifyContent: jc(col.align) }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text
                                 style={[
                                     styles.headerText,
-                                    { textAlign: col.align ?? 'left' },
-                                    { width: col.width ?? 70, justifyContent: jc(col.align) },
                                     s.headerText,
+                                    { textAlign: col.align ?? 'left' },
                                 ]}
                             >
-                                {col.title} <Text>{col.sortable && sortIcon(dir)}</Text>
+                                {col.title}
                             </Text>
-
+                            {col.sortable && sortIcon(dir)}
                         </View>
                     </TouchableOpacity>
+
                 );
             })}
         </View>
     );
 
     const renderRow = ({ item, index }: { item: Row; index: number }) => {
-        const zebraStyle = index % 2 === 0 ? s.rowEven : s.rowOdd;
+        const zebraStyle = index % 2 === 0
+            ? [styles.rowEven, s.rowEven]
+            : [styles.rowOdd, s.rowOdd];
+
         return (
             <View style={[styles.row, s.row, zebraStyle]}>
                 {isCheckBox && (
@@ -198,26 +204,44 @@ const DataTable = <Row extends { id: number }>({
                             style={[
                                 styles.cell,
                                 s.cell,
+                                { width: col.width ?? 70, alignItems: jc(col.align) },
                             ]}
                         >
-                            {custom != null ? custom : (
+                            {custom != null ? (
+                                custom
+                            ) : col.scrollable?.h || col.scrollable?.v ? (
+                                <ScrollView
+                                    horizontal={!!col.scrollable.h}
+                                    style={{ maxHeight: col.scrollable.v ? 60 : 'auto' }} // optional height control
+                                    contentContainerStyle={{ flexGrow: 1 }}
+                                    showsHorizontalScrollIndicator={false}
+                                    showsVerticalScrollIndicator={false}
+                                >
+                                    <Text
+                                        style={[
+                                            styles.cellText,
+                                            s.cellText,
+                                            { textAlign: col.align ?? 'left' },
+                                        ]}
+                                    >
+                                        {val}
+                                    </Text>
+                                </ScrollView>
+                            ) : (
                                 <Text
                                     style={[
-                                        { textAlign: col.align ?? 'left' },
                                         styles.cellText,
-                                        { width: col.width ?? 70, justifyContent: jc(col.align) },
                                         s.cellText,
-
+                                        { textAlign: col.align ?? 'left' },
                                     ]}
-                                    onLayout={(event) => {
-                                        const { width } = event.nativeEvent.layout;
-                                        console.log(width)
-                                    }}
-                                    numberOfLines={col.numberOfLines} >
+                                    numberOfLines={col.numberOfLines}
+                                >
                                     {val}
                                 </Text>
                             )}
+
                         </View>
+
                     );
                 })}
 
@@ -273,32 +297,44 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        backgroundColor: '#f3f3f3',
         borderWidth: 1,
-        borderColor: '#d0d0d0',
+        backgroundColor: '#1a73e8',
+        borderColor: 'transparent',
+        borderRadius: 4
 
     },
     headerCell: {
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderLeftWidth: StyleSheet.hairlineWidth,
-        borderLeftColor: '#d0d0d0',
+        borderLeftColor: 'transparent',
+        justifyContent: 'center',
     },
-    headerText: { fontWeight: 'bold' },
+    headerText: {
+        color: '#fff', fontWeight: '600', fontSize: 14
+    },
 
     row: {
         flexDirection: 'row',
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderColor: '#d0d0d0',
+        borderColor: 'transparent',
     },
     cell: {
         paddingHorizontal: 10,
         paddingVertical: 8,
+        fontSize: 14,
         borderLeftWidth: StyleSheet.hairlineWidth,
-        borderLeftColor: '#d0d0d0',
-        justifyContent: "center",
+        borderLeftColor: 'transparent',
+        justifyContent: 'center',
     },
+    rowEven: {
+        backgroundColor: '#ffffff',
+    },
+    rowOdd: {
+        backgroundColor: '#f9f9f9',
+    },
+
     cellText: {},
     checkbox: {
         textAlign: "center",
