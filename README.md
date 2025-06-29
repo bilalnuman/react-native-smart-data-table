@@ -29,7 +29,7 @@ type Column = {
 
 ## 🚀 Usage
 
-import DataTable, { Column } from '@shared/components/DataTable';
+import { DataTable, Column } from 'react-native-smart-data-table';
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
