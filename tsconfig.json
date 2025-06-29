@@ -1,23 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es2017",
-        "lib": [
-            "es2017",
-            "dom"
-        ],
-        "module": "ESNext",
-        "jsx": "react",
-        "declaration": true,
-        "declarationDir": "./dist/types",
-        "outDir": "./dist",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
-        "skipLibCheck": true,
-        "strict": true
-    },
-    "include": [
-        "src/**/*",
-        "index.ts"
-    ]
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "CommonJS",
+    "jsx": "react",
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["react", "react-native"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

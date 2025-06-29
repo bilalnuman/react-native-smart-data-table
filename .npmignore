@@ -1,5 +1,25 @@
-node_modules/
+# Ignore source files and config (but NOT index.ts if it's used as entry)
+src/
 tsconfig.json
+tsconfig.build.json
+
+# Ignore dependencies and lock files
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore logs and archive files
 *.log
 *.tgz
+
+# Ignore IDE and Git files
 .git
+.gitignore
+.vscode/
+.idea/
+
+# Optional: ignore test files
+__tests__/
+*.test.ts
+*.spec.ts
