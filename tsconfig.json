@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "ESNext",
+        "jsx": "react",
+        "declaration": true,
+        "declarationDir": "./dist/types",
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "strict": true
+    },
+    "include": [
+        "src/**/*",
+        "index.ts"
+    ]
+}
