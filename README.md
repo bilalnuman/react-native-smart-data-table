@@ -23,6 +23,7 @@ type Column = {
   align?: 'left' | 'center' | 'right';
   width?: number;
   numberOfLines?: number;
+  scrollable?: { h?: boolean; v?: boolean };
 };
 
 

@@ -45,10 +45,10 @@ const DataTable = ({ data, columns, isCheckBox = false, searchAble = false, colu
     const [sortDir, setSortDir] = (0, react_1.useState)();
     const [selectedRows, setSelectedRows] = (0, react_1.useState)([]);
     const [searchText, setSearchText] = (0, react_1.useState)('');
-    const visibleCols = columnsVisibility.length
+    const visibleCols = columnsVisibility.length > 0
         ? columns.filter((c) => columnsVisibility.includes(c.key))
         : columns;
-    const jc = (align) => align === 'left' ? 'flex-start' : align === 'right' ? 'flex-end' : 'center';
+    const jc = (a) => a === 'left' ? 'flex-start' : a === 'right' ? 'flex-end' : 'center';
     const onPressHeader = (col) => {
         if (!col.sortable)
             return;
@@ -57,16 +57,13 @@ const DataTable = ({ data, columns, isCheckBox = false, searchAble = false, colu
             setSortDir('asc');
         }
         else {
-            const next = sortDir === 'asc' ? 'desc' : sortDir === 'desc' ? undefined : 'asc';
-            setSortDir(next);
-            if (!next)
+            setSortDir(sortDir === 'asc' ? 'desc' : sortDir === 'desc' ? undefined : 'asc');
+            if (sortDir === undefined)
                 setSortKey(undefined);
         }
     };
     const processedData = (0, react_1.useMemo)(() => {
-        let out = data.filter((r) => Object.values(r).some((v) => typeof v === 'string' || typeof v === 'number'
-            ? v.toString().toLowerCase().includes(searchText.toLowerCase())
-            : false));
+        let out = data.filter((r) => Object.values(r).some((v) => v === null || v === void 0 ? void 0 : v.toString().toLowerCase().includes(searchText.toLowerCase())));
         if (sortKey && sortDir) {
             out = [...out].sort((a, b) => {
                 const va = a[sortKey];
@@ -97,61 +94,66 @@ const DataTable = ({ data, columns, isCheckBox = false, searchAble = false, colu
     const renderHeader = () => (react_1.default.createElement(react_native_1.View, { style: [styles.header, s.header] },
         isCheckBox && (react_1.default.createElement(react_native_1.View, { style: [s.checkbox, styles.checkboxContainer] },
             react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: handleSelectAllToggle },
-                react_1.default.createElement(react_native_1.Text, { style: [
-                        styles.checkbox,
-                        s.checkbox,
-                        selectedRows.length === data.length && styles.isChecked,
-                        s.checkedCheckbox,
-                        { borderColor: selectedRows.length === data.length ? '#fff' : '' },
-                    ] }, selectedRows.length === data.length ? '✓' : '')))),
+                react_1.default.createElement(react_native_1.Text, { style: [styles.checkbox, s.checkbox, selectedRows.length === data.length && styles.isChecked, s.checkedCheckbox, { borderColor: selectedRows.length === data.length ? "#fff" : "" }] }, selectedRows.length === data.length ? "✓" : "")))),
         visibleCols.map((col) => {
             var _a, _b;
             const dir = sortKey === col.key ? sortDir : undefined;
-            return (react_1.default.createElement(react_native_1.TouchableOpacity, { key: col.key, activeOpacity: col.sortable ? 0.6 : 1, onPress: () => onPressHeader(col), style: [styles.headerCell, s.headerCell] },
-                react_1.default.createElement(react_native_1.View, { style: { flexDirection: 'row', justifyContent: jc(col.align), width: (_a = col.width) !== null && _a !== void 0 ? _a : 70 } },
+            return (react_1.default.createElement(react_native_1.TouchableOpacity, { key: col.key, activeOpacity: col.sortable ? 0.6 : 1, onPress: () => onPressHeader(col), style: [
+                    styles.headerCell,
+                    s.headerCell,
+                    { width: (_a = col.width) !== null && _a !== void 0 ? _a : 70, alignItems: jc(col.align) },
+                ] },
+                react_1.default.createElement(react_native_1.View, { style: { flexDirection: 'row', alignItems: 'center' } },
                     react_1.default.createElement(react_native_1.Text, { style: [
                             styles.headerText,
-                            { textAlign: (_b = col.align) !== null && _b !== void 0 ? _b : 'left' },
                             s.headerText,
-                        ] },
-                        col.title,
-                        " ",
-                        col.sortable && sortIcon(dir)))));
+                            { textAlign: (_b = col.align) !== null && _b !== void 0 ? _b : 'left' },
+                        ] }, col.title),
+                    col.sortable && sortIcon(dir))));
         })));
     const renderRow = ({ item, index }) => {
-        const zebraStyle = index % 2 === 0 ? s.rowEven : s.rowOdd;
+        const zebraStyle = index % 2 === 0
+            ? [styles.rowEven, s.rowEven]
+            : [styles.rowOdd, s.rowOdd];
         return (react_1.default.createElement(react_native_1.View, { style: [styles.row, s.row, zebraStyle] },
-            isCheckBox && (react_1.default.createElement(react_native_1.View, { style: [styles.checkboxContainer] },
+            isCheckBox && (react_1.default.createElement(react_native_1.View, { style: [
+                    styles.checkboxContainer,
+                ] },
                 react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: () => handleToggleRow(item.id) },
-                    react_1.default.createElement(react_native_1.Text, { style: [
-                            styles.checkbox,
-                            s.checkbox,
-                            selectedRows.includes(item.id) && styles.isChecked,
-                            s.checkedCheckbox,
-                        ] }, selectedRows.includes(item.id) ? '✓' : '')))),
+                    react_1.default.createElement(react_native_1.Text, { style: [styles.checkbox, s.checkbox, selectedRows.includes(item.id) && styles.isChecked, s.checkedCheckbox,] }, selectedRows.includes(item.id) ? "✓" : "")))),
             visibleCols.map((col) => {
-                var _a, _b, _c;
+                var _a, _b, _c, _d, _e, _f;
                 const val = String((_a = item[col.key]) !== null && _a !== void 0 ? _a : '');
                 const custom = renderCell === null || renderCell === void 0 ? void 0 : renderCell(item, col);
-                return (react_1.default.createElement(react_native_1.View, { key: col.key, style: [styles.cell, s.cell, { width: (_b = col.width) !== null && _b !== void 0 ? _b : 70 }] }, custom != null ? (custom) : (react_1.default.createElement(react_native_1.Text, { style: [
-                        { textAlign: (_c = col.align) !== null && _c !== void 0 ? _c : 'left' },
+                return (react_1.default.createElement(react_native_1.View, { key: col.key, style: [
+                        styles.cell,
+                        s.cell,
+                        { width: (_b = col.width) !== null && _b !== void 0 ? _b : 70, alignItems: jc(col.align) },
+                    ] }, custom != null ? (custom) : ((_c = col.scrollable) === null || _c === void 0 ? void 0 : _c.h) || ((_d = col.scrollable) === null || _d === void 0 ? void 0 : _d.v) ? (react_1.default.createElement(react_native_1.ScrollView, { horizontal: !!col.scrollable.h, style: { maxHeight: col.scrollable.v ? 60 : 'auto' }, contentContainerStyle: { flexGrow: 1 }, showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false },
+                    react_1.default.createElement(react_native_1.Text, { style: [
+                            styles.cellText,
+                            s.cellText,
+                            { textAlign: (_e = col.align) !== null && _e !== void 0 ? _e : 'left' },
+                        ] }, val))) : (react_1.default.createElement(react_native_1.Text, { style: [
                         styles.cellText,
                         s.cellText,
+                        { textAlign: (_f = col.align) !== null && _f !== void 0 ? _f : 'left' },
                     ], numberOfLines: col.numberOfLines }, val))));
             })));
     };
-    return (react_1.default.createElement(react_native_1.View, { style: [styles.container, s.container] },
-        searchAble && (react_1.default.createElement(react_native_1.TextInput, { style: [styles.searchInput, s.searchInput], placeholder: "Search...", value: searchText, onChangeText: setSearchText })),
-        react_1.default.createElement(react_native_1.ScrollView, { horizontal: true, showsHorizontalScrollIndicator: false },
-            react_1.default.createElement(react_native_1.View, { style: { minWidth: 600 } },
-                renderHeader(),
-                react_1.default.createElement(react_native_1.FlatList, { data: processedData, keyExtractor: (item) => item.id.toString(), renderItem: renderRow, ListEmptyComponent: react_1.default.createElement(react_native_1.Text, { style: [styles.noData, s.noData] }, "No Data") }))),
-        pagination && (react_1.default.createElement(react_native_1.View, { style: { alignItems: 'center' } },
-            react_1.default.createElement(Pagination_1.default, { currentPage: page, totalPages: totalPages, onPageChange: onPageChange, variant: paginationVariant, style: { marginTop: 12 } })))));
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(react_native_1.View, { style: [styles.container, s.container] },
+            searchAble && (react_1.default.createElement(react_native_1.TextInput, { style: [styles.searchInput, s.searchInput], placeholder: "Search...", value: searchText, onChangeText: setSearchText })),
+            react_1.default.createElement(react_native_1.ScrollView, { horizontal: true, showsHorizontalScrollIndicator: false },
+                react_1.default.createElement(react_native_1.View, { style: { minWidth: 600 } },
+                    renderHeader(),
+                    react_1.default.createElement(react_native_1.FlatList, { data: processedData, keyExtractor: (item) => item.id.toString(), renderItem: renderRow, ListEmptyComponent: react_1.default.createElement(react_native_1.Text, { style: [styles.noData, s.noData] }, "No Data") }))),
+            pagination &&
+                react_1.default.createElement(react_native_1.View, { style: { alignItems: "center" } },
+                    react_1.default.createElement(Pagination_1.default, { currentPage: page, totalPages: totalPages, onPageChange: onPageChange, variant: paginationVariant, style: { marginTop: 12 } })))));
 };
-exports.default = DataTable;
 const styles = react_native_1.StyleSheet.create({
-    container: { padding: 10, maxHeight: '100%', width: '92%' },
+    container: { padding: 10, maxHeight: "100%", width: "92%" },
     searchInput: {
         borderWidth: 1,
         borderColor: '#ccc',
@@ -161,51 +163,63 @@ const styles = react_native_1.StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        backgroundColor: '#f3f3f3',
         borderWidth: 1,
-        borderColor: '#d0d0d0',
+        backgroundColor: '#1a73e8',
+        borderColor: 'transparent',
+        borderRadius: 4
     },
     headerCell: {
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderLeftWidth: react_native_1.StyleSheet.hairlineWidth,
-        borderLeftColor: '#d0d0d0',
-        minWidth: 50,
+        borderLeftColor: 'transparent',
+        justifyContent: 'center',
     },
-    headerText: { fontWeight: 'bold' },
+    headerText: {
+        color: '#fff', fontWeight: '600', fontSize: 14
+    },
     row: {
         flexDirection: 'row',
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderColor: '#d0d0d0',
+        borderColor: 'transparent',
     },
     cell: {
         paddingHorizontal: 10,
         paddingVertical: 8,
+        fontSize: 14,
         borderLeftWidth: react_native_1.StyleSheet.hairlineWidth,
-        borderLeftColor: '#d0d0d0',
-        minWidth: 50,
+        borderLeftColor: 'transparent',
+        justifyContent: 'center',
+    },
+    rowEven: {
+        backgroundColor: '#ffffff',
+    },
+    rowOdd: {
+        backgroundColor: '#f9f9f9',
     },
     cellText: {},
     checkbox: {
-        textAlign: 'center',
+        textAlign: "center",
         fontSize: 16,
         width: 20,
         height: 20,
         borderRadius: 3,
-        borderColor: '#ccc',
+        borderColor: "#ccc",
         borderWidth: 1,
-        lineHeight: 16,
+        lineHeight: 16
     },
     checkboxContainer: {
         width: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
     isChecked: {
-        borderColor: '#1a73e8',
-        color: '#fff',
-        backgroundColor: '#1a73e8',
+        borderColor: "#1a73e8",
+        color: "#fff",
+        backgroundColor: "#1a73e8"
     },
     noData: { padding: 20, textAlign: 'center' },
 });
+exports.default = DataTable;

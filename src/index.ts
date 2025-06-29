@@ -1,3 +1,4 @@
+// index.ts inside src
 export { default as DataTable } from './DataTable';
 export { default as Pagination } from './Pagination';
 export * from './types';

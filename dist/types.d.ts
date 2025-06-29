@@ -8,6 +8,10 @@ export interface Column {
     align?: Align;
     width?: number;
     numberOfLines?: number;
+    scrollable?: {
+        h?: boolean;
+        v?: boolean;
+    };
 }
 export interface DataTableStyles {
     container?: ViewStyle;
@@ -24,9 +28,7 @@ export interface DataTableStyles {
     noData?: TextStyle;
     checkedCheckbox?: ViewStyle | TextStyle;
 }
-export interface DataTableProps<Row extends {
-    id: number;
-}> {
+export interface DataTableProps<Row> {
     data: Row[];
     columns: Column[];
     isCheckBox?: boolean;
@@ -39,7 +41,7 @@ export interface DataTableProps<Row extends {
     pagination?: boolean;
     page?: number;
     totalPages?: number;
-    paginationVariant?: 'classic' | 'basic';
+    paginationVariant?: "classic" | "basic";
     onPageChange?: (page: number) => void;
 }
 export interface PaginationProps {
