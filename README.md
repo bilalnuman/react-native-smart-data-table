@@ -143,4 +143,3 @@ export default Table;
 | `onPageChange`      | `(page: number) => void`                           | Callback triggered when the page changes.                       |
 | `paginationVariant` | `"classic"` \| `"basic"`                           | Style of pagination control (classic = full, basic = compact).  |
 | `onSelectionChange` | `(selectedIds: number[]) => void`                  | Callback with selected row IDs when selection changes.          |
-                                  |
