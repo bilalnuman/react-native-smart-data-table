@@ -1,6 +1,6 @@
 {
   "name": "react-native-smart-data-table",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A highly customizable data table for React Native with sorting, search, checkbox, pagination and more.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
